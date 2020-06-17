@@ -6,6 +6,9 @@
     <title>Thank you</title>
 </head>
 <body>
+    {% if message %}
+        <div class="message">{{ message | safe }}</div>
+    {% endif %}
     <h1>Thank you for completing the experiment.</h1>
     <h2>Click the link below to go back to the Qualtrics survey:</h2>
 </body>

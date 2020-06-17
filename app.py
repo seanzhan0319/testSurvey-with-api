@@ -5,13 +5,13 @@ app = Flask(__name__)
 
 API_URL = 'https://test-api-615.herokuapp.com/api/feedback'
 res = requests.get(API_URL)
-Headers = {'Content-Type':'application/json'}
+Headers = {'Content-Type': 'application/json'}
 
-# {'userID': 'test04', 'sliderVal': 'put-04', 'q1': 'anssss1', 'q2': 'anssss2', 'q3': 'anssss3'}
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -23,13 +23,17 @@ def submit():
             return render_template('index.html',
                                    message='Please enter User ID')
         dataToPOST = {
-            "userID" : userID,
-            "sliderVal" : sliderVal
+            "userID": userID,
+            "sliderVal": sliderVal
         }
         # Todo: return err message if userID already exists
         response = requests.post(API_URL, json=dataToPOST, headers=Headers)
+        return render_template('thankyou.html',
+                               message='Submission details: {}'.
+                               format(str(response.json())))
         # return render_template('index.html',
         #                        message='You have already submitted')
+
 
 if __name__ == '__main__':
     app.run()
