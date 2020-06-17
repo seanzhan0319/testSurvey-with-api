@@ -26,7 +26,14 @@ def submit():
             "userID": userID,
             "sliderVal": sliderVal
         }
-        # Todo: return err message if userID already exists
+        # Return err message if userID already exists
+        dataGOT = requests.get(API_URL).json()
+        IDs = []
+        for i in dataGOT:
+            IDs.append(i["userID"])
+        if userID in IDs:
+            return render_template('index.html',
+                                   message='UserID already exists')
         response = requests.post(API_URL, json=dataToPOST, headers=Headers)
         return render_template('thankyou.html',
                                message='Submission details: {}'.
