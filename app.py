@@ -3,7 +3,7 @@ import requests
 
 app = Flask(__name__)
 
-API_URL = 'https://test-api-615.herokuapp.com/api/feedback'
+API_URL = 'https://test-api-615.herokuapp.com/api/feedback/test'
 res = requests.get(API_URL)
 Headers = {'Content-Type': 'application/json'}
 
@@ -40,6 +40,16 @@ def submit():
                                format(str(response.json())))
         # return render_template('index.html',
         #                        message='You have already submitted')
+
+@app.route("/researcher")
+def researcher():
+    return render_template('researcher.html')
+
+@app.route("/researcher/submit", methods=['POST'])
+def researcher_submit():
+    if request.method == 'POST':
+        col_name = request.form['col_name']
+        return render_template('test.html', message='{}'.format(col_name))
 
 
 if __name__ == '__main__':
