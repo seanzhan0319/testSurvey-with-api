@@ -48,8 +48,7 @@ def submit():
 #     ".mongodb.net/demoDatabase?retryWrites=true&w=majority"
 # admin_client = pymongo.MongoClient(admin_mongodburi)
 # admin_db = admin_client.demoDatabase
-admin_mongodburi = "mongodb://user:p123456@ds263248.mlab.com"\
-    ":63248/heroku_5qkz777p"
+admin_mongodburi = "mongodb://user:p123456@ds263248.mlab.com:63248/heroku_5qkz777p"
 admin_client = pymongo.MongoClient(admin_mongodburi)
 admin_db = admin_client["heroku_5qkz777p"]
 
