@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Signup</title>
 </head>
 <body>
-    <h1>Login</h1>
+    <h1>Signup</h1>
     <div class="container">
-        <form action="/researcher" method="POST">
+        <form action="/signup/success" method="POST">
             Username: <input type="text" name="usr_name"></input>
             <br><br>
             Password: <input type="text" name="pwd"></input>
@@ -18,8 +18,15 @@
         <br>
         {% if message %}
             <div class="message">{{ message | safe }}</div>
+            <br>
         {% endif %}
     </div>
+    {% if should_login %}
+        <div class="container">
+            <form action="/signup/success/redirect" method="POST">
+                <input type="submit" value="Proceed to login" class="btn"></input>
+            </form>
+        </div>
+    {% endif %}
 </body>
 </html>
-

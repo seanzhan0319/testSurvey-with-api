@@ -6,13 +6,17 @@
     <title>Researcher</title>
 </head>
 <body>
+    Researcher: <div class="usr">{{ usr | safe }}</div>
+    <br>
     <h1>Create Collection</h1>
-    <div class="container" >
-        <form action="/researcher/submit" method="POST">
-            <p>Enter collection name below:</p>
-            <input type="text" id="col_name">
-            <input type="submit" value="Submit" class="btn">
-        </form>
-    </div>
+    <form action="/researcher/submit" method="POST" role="form">
+        <p>Enter collection name below:</p>
+        <input type="text" name="col_name"></input>
+        <input type="submit" value="Submit" class="btn"></input>
+        <input type="hidden" name="usr" value="{{ usr }}"></input>
+    </form>
+    {% if message %}
+        <div class="message">{{ message | safe }}</div>
+    {% endif %}
 </body>
 </html>
