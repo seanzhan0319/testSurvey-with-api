@@ -61,19 +61,28 @@ def signup_success():
     if request.method == 'POST':
         username = request.form['usr_name']
         password = request.form['pwd']
-        # need to safeguard username repetition
-        # admin_db.add_user(username, password, roles=[{'role':'restricted', 'db':'restricted'}])
-        admin_db.command("createUser", username, 
-            pwd=password, roles=["restricted"])
-        dataToPOST = {
-            "username": username,
-            "password": password
-        }
         Dest_URL = Feedback_URL + '/credentials'
-        sent = requests.post(Dest_URL, json=dataToPOST, headers=Headers)
-        return render_template('signup.html',
-            message='User ({}) created.'.format(username),
-            should_login=True)
+        dataGOT = requests.get(Dest_URL).json()
+        all_usernames = []
+        for item in dataGOT:
+            all_usernames.append(item["username"])
+        # safeguarding repetition of usernames
+        if username in all_usernames:
+            return render_template('signup.html',
+                message='Username already exists. Please enter a new one.',
+                should_login=False)
+        else:
+            admin_db.command("createUser", username, 
+            pwd=password, roles=["restricted"])
+            dataToPOST = {
+                "username": username,
+                "password": password
+                }
+            sent = requests.post(Dest_URL, json=dataToPOST, headers=Headers)
+            return render_template('signup.html',
+                message='User ({}) created.'.format(username),
+                should_login=True)
+        
 
 @app.route("/signup/success/redirect", methods=["POST"])
 def signup_redirect():
@@ -122,7 +131,7 @@ def researcher_submit():
         # admin_db.command("updateUser", username, roles=[role_name])
         # print(admin_db.command("usersInfo", showPrivileges=True))
         admin_db.command("grantRolesToUser", username, roles=[{'role': role_name, 'db': 'heroku_5qkz777p'}])
-        return render_template('researcher.html',
+        return render_template('researcher.html', usr=username,
             message='Collection ({}) created.'.format(col_name))
 
 
