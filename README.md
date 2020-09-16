@@ -1,3 +1,11 @@
+# DEPRECATED REPO
+
+We are no longer using Flask for frontend development. 
+
+All frontend has been switched to React since late June.
+
+---
+
 This project is linked to heroku app testexpt-w-api.
 
 ### how to create a role and users ###
